@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "757058536894",
+    "project_id": "run-and-detect",
+    "storage_bucket": "run-and-detect.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757058536894:android:4735bda346ba1517b465ef",
+        "android_client_info": {
+          "package_name": "com.jyotimoykashyap.runanddetect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "757058536894-mojfoi7nvfkekjhj4n3d4nlrkov145cv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAE15ldttC6e10cSMcUsyHZa8MdxwpyGwo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "757058536894-mojfoi7nvfkekjhj4n3d4nlrkov145cv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
