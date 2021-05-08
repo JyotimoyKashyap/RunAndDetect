@@ -21,5 +21,14 @@
         android:id="@+id/introFragment"
         android:name="com.jyotimoykashyap.runanddetect.IntroFragment.IntroFragment"
         android:label="fragment_intro"
-        tools:layout="@layout/fragment_intro" />
+        tools:layout="@layout/fragment_intro" >
+        <action
+            android:id="@+id/action_introFragment_to_camera"
+            app:destination="@id/camera" />
+    </fragment>
+    <activity
+        android:id="@+id/camera"
+        android:name="com.jyotimoykashyap.runanddetect.Camera"
+        android:label="activity_camera"
+        tools:layout="@layout/activity_camera" />
 </navigation>
