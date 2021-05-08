@@ -9,5 +9,14 @@
         android:id="@+id/splashFragment"
         android:name="com.jyotimoykashyap.runanddetect.SplashFragment.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" />
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_introFragment"
+            app:destination="@id/introFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/introFragment"
+        android:name="com.jyotimoykashyap.runanddetect.IntroFragment.IntroFragment"
+        android:label="fragment_intro"
+        tools:layout="@layout/fragment_intro" />
 </navigation>
