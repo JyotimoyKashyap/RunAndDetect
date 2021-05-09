@@ -1,5 +1,6 @@
 package com.jyotimoykashyap.runanddetect
 
+import android.content.Intent
 import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
@@ -125,11 +126,13 @@ class Camera : AppCompatActivity(){
                         val inputStream = contentResolver.openInputStream(savedUri)
                         val galleryImage = BitmapFactory.decodeStream(inputStream)
                         // get the bitmap
+                        Log.d("MyCamera", "Image created")
                         createBitmap(galleryImage)
 
                         // pose detector to process
                         poseDetector.process(image)
                             .addOnSuccessListener {
+                                Log.d("MyCamera", "Image Processing")
                                 processImage(it)
                             }
                             .addOnFailureListener {
@@ -138,6 +141,7 @@ class Camera : AppCompatActivity(){
 
                     } catch (e: IOException) {
                         e.printStackTrace()
+                        Log.d("MyCamera", "Image Processing failed")
                     }
                 }
 
@@ -155,8 +159,6 @@ class Camera : AppCompatActivity(){
         val rotationDegrees =0
 
         resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height)
-
-
 
     }
 
@@ -334,6 +336,10 @@ class Camera : AppCompatActivity(){
         canvas.drawLine(lHipX, lHipY, lKneeX, lKneeY, paint)
         canvas.drawLine(rKneeX, rKneeY, rAnkleX, rAnkleY, paint)
         canvas.drawLine(lKneeX, lKneeY, lAnkleX, lAnkleY, paint)
+
+        Log.d("MyCamera" , "Above intent")
+        val intent = Intent(this, PoseDetectActivity::class.java)
+        startActivity(intent)
 
     }
 

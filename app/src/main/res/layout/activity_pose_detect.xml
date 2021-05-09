@@ -6,4 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".PoseDetectActivity">
 
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

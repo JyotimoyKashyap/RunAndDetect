@@ -12,6 +12,11 @@ class PoseDetectActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPoseDetectBinding.inflate(layoutInflater)
 
+        val singleTone = SingleTone().getInstance()
+
+        binding.imageView.setImageBitmap(singleTone?.getMyImage())
+
+
 
         setContentView(binding.root)
     }
