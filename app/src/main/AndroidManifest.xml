@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RunAndDetect">
-        <activity android:name=".Camera"></activity>
+        <activity android:name=".PoseDetectActivity"></activity>
+        <activity android:name=".Camera" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,12 +1,15 @@
 package com.jyotimoykashyap.runanddetect
 
+import android.graphics.*
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.camera.core.*
-import androidx.camera.core.R
+import androidx.appcompat.app.AppCompatActivity
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.google.android.gms.tasks.Task
@@ -18,7 +21,6 @@ import com.google.mlkit.vision.pose.accurate.AccuratePoseDetectorOptions
 import com.jyotimoykashyap.runanddetect.databinding.ActivityCameraBinding
 import java.io.File
 import java.io.IOException
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -52,7 +54,7 @@ class Camera : AppCompatActivity(){
 
             // to take photos
             captureBtn.setOnClickListener{
-                Log.d("MyCamera" , "Camera Running")
+                Log.d("MyCamera", "Camera Running")
                 takePhoto()
             }
 
@@ -89,6 +91,8 @@ class Camera : AppCompatActivity(){
 
     val poseDetector = PoseDetection.getClient(options)
 
+    lateinit var resizedBitmap: Bitmap
+
 
     private fun takePhoto() {
         val imageCapture = imageCapture ?: return
@@ -105,37 +109,55 @@ class Camera : AppCompatActivity(){
 
         // setting up image capture listener
         imageCapture.takePicture(
-            outputOptions, ContextCompat.getMainExecutor(this), object : ImageCapture.OnImageSavedCallback{
+            outputOptions,
+            ContextCompat.getMainExecutor(this),
+            object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                     val savedUri = Uri.fromFile(photoFile)
                     val msg = "Photograph captured"
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
 
                     // run pose detect
-                    val image : InputImage
+                    val image: InputImage
                     try {
                         image = InputImage.fromFilePath(baseContext, Uri.fromFile(photoFile))
+
+                        val inputStream = contentResolver.openInputStream(savedUri)
+                        val galleryImage = BitmapFactory.decodeStream(inputStream)
+                        // get the bitmap
+                        createBitmap(galleryImage)
 
                         // pose detector to process
                         poseDetector.process(image)
                             .addOnSuccessListener {
                                 processImage(it)
                             }
-                            .addOnFailureListener{
-                                Log.d("MyCamera" , "Image Processing failed")
+                            .addOnFailureListener {
+                                Log.d("MyCamera", "Image Processing failed")
                             }
 
-                    }catch (e: IOException){
+                    } catch (e: IOException) {
                         e.printStackTrace()
                     }
                 }
 
                 override fun onError(exception: ImageCaptureException) {
-                    Log.e("MyCamera" , "Photo capture failed %=${exception.message}" , exception)
+                    Log.e("MyCamera", "Photo capture failed %=${exception.message}", exception)
                 }
 
             }
         )
+    }
+
+    fun createBitmap(bitmap: Bitmap){
+        val width = bitmap.width
+        val height = bitmap.height
+        val rotationDegrees =0
+
+        resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height)
+
+
+
     }
 
     fun processImage(pose: Pose){
@@ -145,48 +167,196 @@ class Camera : AppCompatActivity(){
 
             // Or get specific PoseLandmarks individually. These will all be null if no person
             // was detected
+
+            // Shoulder
             val leftShoulder = pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER)
             val rightShoulder = pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER)
+
+            // Elbow
             val leftElbow = pose.getPoseLandmark(PoseLandmark.LEFT_ELBOW)
             val rightElbow = pose.getPoseLandmark(PoseLandmark.RIGHT_ELBOW)
+
+            // Wrist
             val leftWrist = pose.getPoseLandmark(PoseLandmark.LEFT_WRIST)
             val rightWrist = pose.getPoseLandmark(PoseLandmark.RIGHT_WRIST)
+
+            // Hips
             val leftHip = pose.getPoseLandmark(PoseLandmark.LEFT_HIP)
             val rightHip = pose.getPoseLandmark(PoseLandmark.RIGHT_HIP)
+
+            // Knee
             val leftKnee = pose.getPoseLandmark(PoseLandmark.LEFT_KNEE)
             val rightKnee = pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE)
+
+            // Ankle
             val leftAnkle = pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE)
             val rightAnkle = pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE)
-            val leftPinky = pose.getPoseLandmark(PoseLandmark.LEFT_PINKY)
-            val rightPinky = pose.getPoseLandmark(PoseLandmark.RIGHT_PINKY)
-            val leftIndex = pose.getPoseLandmark(PoseLandmark.LEFT_INDEX)
-            val rightIndex = pose.getPoseLandmark(PoseLandmark.RIGHT_INDEX)
-            val leftThumb = pose.getPoseLandmark(PoseLandmark.LEFT_THUMB)
-            val rightThumb = pose.getPoseLandmark(PoseLandmark.RIGHT_THUMB)
-            val leftHeel = pose.getPoseLandmark(PoseLandmark.LEFT_HEEL)
-            val rightHeel = pose.getPoseLandmark(PoseLandmark.RIGHT_HEEL)
-            val leftFootIndex = pose.getPoseLandmark(PoseLandmark.LEFT_FOOT_INDEX)
-            val rightFootIndex = pose.getPoseLandmark(PoseLandmark.RIGHT_FOOT_INDEX)
+
+            // nose
             val nose = pose.getPoseLandmark(PoseLandmark.NOSE)
-            val leftEyeInner = pose.getPoseLandmark(PoseLandmark.LEFT_EYE_INNER)
+
             val leftEye = pose.getPoseLandmark(PoseLandmark.LEFT_EYE)
-            val leftEyeOuter = pose.getPoseLandmark(PoseLandmark.LEFT_EYE_OUTER)
-            val rightEyeInner = pose.getPoseLandmark(PoseLandmark.RIGHT_EYE_INNER)
             val rightEye = pose.getPoseLandmark(PoseLandmark.RIGHT_EYE)
-            val rightEyeOuter = pose.getPoseLandmark(PoseLandmark.RIGHT_EYE_OUTER)
+
             val leftEar = pose.getPoseLandmark(PoseLandmark.LEFT_EAR)
             val rightEar = pose.getPoseLandmark(PoseLandmark.RIGHT_EAR)
+
             val leftMouth = pose.getPoseLandmark(PoseLandmark.LEFT_MOUTH)
             val rightMouth = pose.getPoseLandmark(PoseLandmark.RIGHT_MOUTH)
 
-            val leftShoulderPoint = leftShoulder.position
-            val leftX = leftShoulder.position.x
-            val leftY = leftShoulder.position.y
 
-            Log.d("MyCamera" , "Left Shoulder : x "  + leftX.toString() + "Left Shoulder : y "  + leftY.toString())
+            // Shoulders left and right
+            val leftShoulderPoint = leftShoulder.position
+            val leftShoulderX = leftShoulderPoint.x
+            val leftShoulderY = leftShoulderPoint.y
+            val rightShoulderPoint = rightShoulder.position
+            val rightShoulderX = rightShoulderPoint.x
+            val rightShoulderY = rightShoulderPoint.y
+
+            // Elbows left and right
+            val leftElbowP = leftElbow.position
+            val lElbowX = leftElbowP.x
+            val lElbowY = leftElbowP.y
+            val rightElbowP = rightElbow.position
+            val rElbowX = rightElbowP.x
+            val rElbowY = rightElbowP.y
+
+            // Wrist
+            val leftWristP = leftWrist.position
+            val lWristX = leftWristP.x
+            val lWristY = leftWristP.y
+            val rightWristP = rightWrist.position
+            val rWristX = rightWristP.x
+            val rWristY = rightWristP.y
+
+            // Hips
+            val leftHipP = leftHip.position
+            val lHipX = leftHipP.x
+            val lHipY = leftHipP.y
+            val rightHipP = rightHip.position
+            val rHipX = rightHipP.x
+            val rHipY = rightHipP.y
+
+            // Knees
+            val leftKneeP = leftKnee.position
+            val lKneeX = leftKneeP.x
+            val lKneeY = leftKneeP.y
+            val rightKneeP = rightKnee.position
+            val rKneeX = rightKneeP.x
+            val rKneeY = rightKneeP.y
+
+
+            // Ankles
+            val leftAnkleP = leftAnkle.position
+            val lAnkleX = leftAnkleP.x
+            val lAnkleY = leftAnkleP.y
+            val rightAnkleP = rightAnkle.position
+            val rAnkleX = rightAnkleP.x
+            val rAnkleY = rightAnkleP.y
+
+            // nose
+            val noseP = nose.position
+            val noseX = noseP.x
+            val noseY = noseP.y
+
+            //Eye
+            val leftEyeP = leftEye.position
+            val leftEyeX = leftEyeP.x
+            val leftEyeY = leftEyeP.y
+            val rightEyeP = rightEye.position
+            val rightEyeX = rightEyeP.x
+            val rightEyeY = rightEyeP.y
+
+
+            // Mouth
+            val leftMouthP = leftMouth.position
+            val leftMouthX = leftMouthP.x
+            val leftMouthY = leftMouthP.y
+            val rightMouthP = rightMouth.position
+            val rightMouthX = rightMouthP.x
+            val rightMouthY = rightMouthP.y
+
+            // Ear
+            val leftEarP = leftEar.position
+            val leftEarX = leftEarP.x
+            val leftEarY = leftEarP.y
+            val rightEarP = rightEar.position
+            val rightEarX = rightEarP.x
+            val rightEarY = rightEarP.y
+
+            displayAll(leftShoulderX, leftShoulderY, rightShoulderX, rightShoulderY,
+                        lElbowX, lElbowY, rElbowX, rElbowY, lWristX, lWristY, rWristX, rWristY,
+                        lHipX, lHipY, rHipX, rHipY, lAnkleX, lAnkleY, rAnkleX, rAnkleY,
+                        lKneeX, lKneeY, rKneeX, rKneeY)
+
+
+
+
+
         }catch (e: Exception){
-            Log.d("MyCamera" , "Error in processing")
+            Log.d("MyCamera", "Error in processing")
         }
+    }
+
+    // draw pose
+    fun displayAll(
+        lShoulderX: Float, lShoulderY: Float, rShoulderX: Float, rShoulderY: Float,
+        lElbowX: Float, lElbowY: Float, rElbowX: Float, rElbowY: Float,
+        lWristX: Float, lWristY: Float, rWristX: Float, rWristY: Float,
+        lHipX: Float, lHipY: Float, rHipX: Float, rHipY: Float,
+        lAnkleX: Float, lAnkleY: Float, rAnkleX: Float, rAnkleY: Float,
+        lKneeX: Float, lKneeY: Float, rKneeX: Float, rKneeY: Float,
+    ){
+        val paint = Paint()
+        paint.color = Color.GREEN
+        val strokeWidth = 4.0f
+        paint.strokeWidth = strokeWidth
+
+        val drawBitmap = Bitmap.createBitmap(
+            resizedBitmap.width,
+            resizedBitmap.height,
+            resizedBitmap.config
+        )
+
+        val canvas = Canvas(drawBitmap)
+
+        canvas.drawBitmap(resizedBitmap, 0f, 0f, null)
+
+        canvas.drawLine(rShoulderX, rShoulderY, rElbowX, rElbowY, paint)
+        canvas.drawLine(lShoulderX, lShoulderY, rShoulderX, rShoulderY, paint)
+        canvas.drawLine(rElbowX, rElbowY, rWristX, rWristY, paint)
+        canvas.drawLine(lShoulderX, lShoulderY, lElbowX, lElbowY, paint)
+        canvas.drawLine(lElbowX, lElbowY, lWristX, lWristY, paint)
+        canvas.drawLine(rShoulderX, rShoulderY, rHipX, rHipY, paint)
+        canvas.drawLine(lShoulderX, lShoulderY, lHipX, lHipY, paint)
+        canvas.drawLine(lHipX, lHipY, rHipX, rHipY, paint)
+        canvas.drawLine(rHipX, rHipY, rKneeX, rKneeY, paint)
+        canvas.drawLine(lHipX, lHipY, lKneeX, lKneeY, paint)
+        canvas.drawLine(rKneeX, rKneeY, rAnkleX, rAnkleY, paint)
+        canvas.drawLine(lKneeX, lKneeY, lAnkleX, lAnkleY, paint)
+
+    }
+
+    fun getAngle(
+        firstPoint: PoseLandmark,
+        midPoint: PoseLandmark,
+        lastPoint: PoseLandmark
+    ): Double {
+        var result = Math.toDegrees(
+            Math.atan2(
+                (lastPoint.position.y - midPoint.position.y).toDouble(), (
+                        lastPoint.position.x - midPoint.position.x).toDouble()
+            )
+                    - Math.atan2(
+                (firstPoint.position.y - midPoint.position.y).toDouble(), (
+                        firstPoint.position.x - midPoint.position.x).toDouble()
+            )
+        )
+        result = Math.abs(result) // Angle should never be negative
+        if (result > 180) {
+            result = 360.0 - result // Always get the acute representation of the angle
+        }
+        return result
     }
 
     private fun startCamera(){
@@ -206,11 +376,11 @@ class Camera : AppCompatActivity(){
             imageCapture = ImageCapture.Builder().build()
 
             //image analyzer
-            val imageAnalyzer = ImageAnalysis.Builder()
-                .build()
-                .also {
-                    it.setAnalyzer(cameraExecutor, PoseDetectionAnalyzer())
-                }
+//            val imageAnalyzer = ImageAnalysis.Builder()
+//                .build()
+//                .also {
+//                    it.setAnalyzer(cameraExecutor, PoseDetectionAnalyzer())
+//                }
 
             // set back camera as default
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
@@ -219,9 +389,9 @@ class Camera : AppCompatActivity(){
                 cameraProvider.unbindAll()
 
                 // bind use cases to camera
-                cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture, imageAnalyzer)
-            }catch (exc: Exception){
-                Log.e("MyCamera", "Binding failed",exc)
+                cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
+            } catch (exc: Exception) {
+                Log.e("MyCamera", "Binding failed", exc)
             }
 
         }, ContextCompat.getMainExecutor(this))
