@@ -45,7 +45,7 @@ class Camera : AppCompatActivity(){
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        graphicOverlay = binding.graphicOverlay
+        //graphicOverlay = binding.graphicOverlay
 
         // set up listeners
         binding.run {
@@ -209,7 +209,7 @@ class Camera : AppCompatActivity(){
             val imageAnalyzer = ImageAnalysis.Builder()
                 .build()
                 .also {
-                    it.setAnalyzer(cameraExecutor, PoseDetectionAnalyzer( graphicOverlay))
+                    it.setAnalyzer(cameraExecutor, PoseDetectionAnalyzer())
                 }
 
             // set back camera as default
@@ -221,7 +221,7 @@ class Camera : AppCompatActivity(){
                 // bind use cases to camera
                 cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture, imageAnalyzer)
             }catch (exc: Exception){
-                Log.e("camera", "Binding failed",exc)
+                Log.e("MyCamera", "Binding failed",exc)
             }
 
         }, ContextCompat.getMainExecutor(this))

@@ -11,7 +11,7 @@ import com.google.mlkit.vision.pose.PoseLandmark
 import com.google.mlkit.vision.pose.defaults.PoseDetectorOptions
 import java.lang.Exception
 
-class PoseDetectionAnalyzer(private val view: GraphicOverlay) : ImageAnalysis.Analyzer{
+class PoseDetectionAnalyzer() : ImageAnalysis.Analyzer{
 
     @SuppressLint("UnsafeExperimentalUsageError")
     override fun analyze(imageProxy: ImageProxy) {
