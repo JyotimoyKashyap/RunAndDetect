@@ -6,6 +6,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".IntroFragment.IntroFragment">
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/account_icon"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        app:icon="@drawable/ic_account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="20dp"
+        app:cornerRadius="50dp"
+        app:iconPadding="0dp"
+        app:iconTint="#9F9E9E"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        app:iconGravity="textStart"/>
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_intro_1"
         android:layout_width="wrap_content"
@@ -16,19 +30,23 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Running Pose Detection"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="20dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="30dp"
+        android:text="Run and Detect"
         android:textAlignment="center"
-        android:layout_marginTop="40dp"/>
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/account_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
+        android:layout_margin="40dp"
         app:lottie_rawRes="@raw/man_running"
         app:layout_constraintBottom_toTopOf="@id/guideline_intro_1"
         app:layout_constraintTop_toTopOf="parent"
