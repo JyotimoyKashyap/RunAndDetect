@@ -4,29 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Authentication.LoginFragment">
+    tools:context=".Authentication.SignUpFragment">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_login_1"
+        android:id="@+id/sign_up_guideline_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.45"/>
+        app:layout_constraintGuide_percent="0.35"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="Sign Up"
         android:textStyle="bold"
         android:textSize="30sp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="12dp"
+        app:layout_constraintBottom_toTopOf="@id/sign_up_guideline_1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/guideline_login_1"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email_address_input_layout"
+        android:id="@+id/email_sign_input_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -35,12 +35,12 @@
         android:layout_marginEnd="12dp"
         android:hint="Email ID"
         app:errorEnabled="true"
-        app:layout_constraintTop_toBottomOf="@id/guideline_login_1"
+        app:layout_constraintTop_toBottomOf="@id/sign_up_guideline_1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <EditText
-            android:id="@+id/email_address_edit_text"
+            android:id="@+id/email_sign_edit_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="18sp"
@@ -48,60 +48,61 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password_input_layout"
+        android:id="@+id/password_sign_input_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
         android:hint="Password"
-        app:errorEnabled="true"
         app:passwordToggleEnabled="true"
-        app:layout_constraintTop_toBottomOf="@id/email_address_input_layout"
+        app:errorEnabled="true"
+        app:layout_constraintTop_toBottomOf="@id/email_sign_input_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <EditText
-            android:id="@+id/password_edit_text"
+            android:id="@+id/password_sign_edit_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="18sp"
-            android:inputType="textPassword"/>
+            android:inputType="textEmailAddress"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/sign_in_btn"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password_confirm_sign_input_layout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Sign In"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/password_input_layout"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:hint="Confirm Password"
+        app:errorEnabled="true"
+        app:passwordToggleEnabled="true"
+        app:layout_constraintTop_toBottomOf="@id/password_sign_input_layout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Not Registered ?"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-
+        <EditText
+            android:id="@+id/password_confirm_sign_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="18sp"
+            android:inputType="textEmailAddress"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/nav_to_sign_up_btn"
+        android:id="@+id/sign_up_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign Up"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        style="@style/Widget.MaterialComponents.Button.TextButton"/>
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/password_confirm_sign_input_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 
 
 

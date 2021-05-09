@@ -51,18 +51,29 @@ class LoginFragment : Fragment() {
             emailAddressEditText.addTextChangedListener(textWatcher)
             passwordEditText.addTextChangedListener(textWatcher)
 
+            // navigate to sign up fragment if not registered
+            navToSignUpBtn.setOnClickListener{
+                findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
+            }
 
-            // authentication (sign in)
-            auth.signInWithEmailAndPassword(emailAddressEditText.text.toString().trim(), passwordEditText.text.toString().trim())
-                .addOnCompleteListener(requireActivity()){
-                    if(it.isSuccessful){
-                        val user = auth.currentUser
-                        findNavController().navigate(R.id.action_loginFragment_to_introFragment)
-                    }else{
-                        Toast.makeText(context, "Sign in failed Please try again", Toast.LENGTH_SHORT).show()
-                        passwordEditText.setText("")
+
+            signInBtn.setOnClickListener{
+                // authentication (sign in)
+                auth.signInWithEmailAndPassword(emailAddressEditText.text.toString().trim(), passwordEditText.text.toString().trim())
+                    .addOnCompleteListener(requireActivity()){
+                        if(it.isSuccessful){
+                            val user = auth.currentUser
+                            findNavController().navigate(R.id.action_loginFragment_to_introFragment)
+                        }else{
+                            Toast.makeText(context, "Sign in failed Please try again", Toast.LENGTH_SHORT).show()
+                            passwordEditText.setText("")
+                        }
                     }
-                }
+
+
+            }
+
+
         }
 
 
@@ -79,21 +90,20 @@ class LoginFragment : Fragment() {
                 var emailInput = emailAddressEditText.text.toString().trim()
                 var passwordInput = passwordEditText.text.toString().trim()
 
+                if(passwordEditText.text.toString().trim().length < 3){
+                    passwordInputLayout.error = "Password is too small"
+                }else passwordInputLayout.error = null
+
+                if(!isEmailValid(emailAddressEditText.text.toString().trim())){
+                    emailAddressInputLayout.error = "Invalid email address"
+                }else emailAddressInputLayout.error = null
+
                 // enabling or disabling the button for sign in
                 signInBtn.isEnabled = emailInput.isNotEmpty() && passwordInput.isNotEmpty()
             }
         }
 
         override fun afterTextChanged(p0: Editable?) {
-            binding.run {
-                if(passwordEditText.text.toString().trim().length < 3){
-                    passwordInputLayout.error = "Password is too small"
-                }
-
-                if(!isEmailValid(emailAddressEditText.text.toString().trim())){
-                    emailAddressInputLayout.error = "Invalid email address"
-                }
-            }
 
         }
 
