@@ -25,6 +25,9 @@ class PoseDetectionAnalyzer(private val view: GraphicOverlay) : ImageAnalysis.An
         if(mediaImage != null){
             val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
 
+            // setting image source info
+            //view.setImageSourceInfo(mediaImage.width, mediaImage.height, false)
+
             // processing the image
             val result = poseDetector.process(image)
                 .addOnSuccessListener {

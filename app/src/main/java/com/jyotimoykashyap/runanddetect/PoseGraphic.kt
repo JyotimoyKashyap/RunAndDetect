@@ -49,7 +49,7 @@ class PoseGraphic internal constructor(
         }
 
         // Draw pose classification text.
-        val classificationX = POSE_CLASSIFICATION_TEXT_SIZE * 0.5f
+//        val classificationX = POSE_CLASSIFICATION_TEXT_SIZE * 0.5f
 //        for (i in poseClassification.indices) {
 //            val classificationY = canvas?.height?.minus(
 //                (
