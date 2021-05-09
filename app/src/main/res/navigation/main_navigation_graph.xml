@@ -16,6 +16,9 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/introFragment"
@@ -31,4 +34,13 @@
         android:name="com.jyotimoykashyap.runanddetect.Camera"
         android:label="activity_camera"
         tools:layout="@layout/activity_camera" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.jyotimoykashyap.runanddetect.Authentication.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_introFragment"
+            app:destination="@id/introFragment" />
+    </fragment>
 </navigation>

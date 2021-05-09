@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.jyotimoykashyap.runanddetect.R
 import com.jyotimoykashyap.runanddetect.databinding.FragmentSplashBinding
 
@@ -24,6 +25,8 @@ class SplashFragment : Fragment() {
 
     private var _binding : FragmentSplashBinding? = null
     private val binding get() =_binding!!
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,9 +44,19 @@ class SplashFragment : Fragment() {
         _binding = FragmentSplashBinding.inflate(inflater, container, false)
 
         // your code goes here
-        Handler(Looper.getMainLooper()).postDelayed({
-            findNavController().navigate(R.id.action_splashFragment_to_introFragment)
-        },500)
+        auth = FirebaseAuth.getInstance()
+
+        if(auth.currentUser != null){
+            Handler(Looper.getMainLooper()).postDelayed({
+                findNavController().navigate(R.id.action_splashFragment_to_introFragment)
+            },500)
+        }else{
+            Handler(Looper.getMainLooper()).postDelayed({
+                findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+            }, 500)
+        }
+
+
 
 
 
