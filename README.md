@@ -9,4 +9,4 @@ The basic functionality is to capture the image and then analyze the photograph 
 
 
 
-**The README will be updated later with proper app structure later on.
+**The README will be updated later with proper app structure
