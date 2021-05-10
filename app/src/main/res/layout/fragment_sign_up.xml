@@ -6,6 +6,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Authentication.SignUpFragment">
 
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progress_bar_sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:showAnimationBehavior="outward"
+        android:indeterminate="true"
+        app:hideAnimationBehavior="inward"
+        app:trackCornerRadius="10dp"
+        android:indeterminateBehavior="cycle"/>
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/sign_up_guideline_1"
         android:layout_width="wrap_content"
@@ -19,6 +33,7 @@
         android:text="Sign Up"
         android:textStyle="bold"
         android:textSize="30sp"
+        android:textColor="@color/purple_500"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="12dp"
         app:layout_constraintBottom_toTopOf="@id/sign_up_guideline_1"

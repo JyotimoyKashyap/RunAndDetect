@@ -44,10 +44,14 @@ class LoginFragment : Fragment() {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         // your code goes here
 
+
         // initialize firebase auth
         auth = FirebaseAuth.getInstance()
 
         binding.run {
+
+            progressIndicator.hide()
+
             emailAddressEditText.addTextChangedListener(textWatcher)
             passwordEditText.addTextChangedListener(textWatcher)
 
@@ -58,9 +62,12 @@ class LoginFragment : Fragment() {
 
 
             signInBtn.setOnClickListener{
+                // show progress bar
+                progressIndicator.show()
                 // authentication (sign in)
                 auth.signInWithEmailAndPassword(emailAddressEditText.text.toString().trim(), passwordEditText.text.toString().trim())
                     .addOnCompleteListener(requireActivity()){
+                        progressIndicator.hide()
                         if(it.isSuccessful){
                             val user = auth.currentUser
                             findNavController().navigate(R.id.action_loginFragment_to_introFragment)

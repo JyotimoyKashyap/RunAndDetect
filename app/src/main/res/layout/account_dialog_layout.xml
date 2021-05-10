@@ -6,7 +6,7 @@
 
     <ImageView
         android:id="@+id/account_icon_png"
-        android:layout_width="100dp"
+        android:layout_width="70dp"
         android:layout_height="120dp"
         android:src="@drawable/google"
         android:layout_marginTop="20dp"

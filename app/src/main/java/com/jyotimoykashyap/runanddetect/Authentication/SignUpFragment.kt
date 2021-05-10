@@ -47,16 +47,20 @@ class SignUpFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         binding.run {
+            progressBarSignIn.hide()
+
             emailSignEditText.addTextChangedListener(textWatcher)
             passwordConfirmSignEditText.addTextChangedListener(textWatcher)
             passwordSignEditText.addTextChangedListener(textWatcher)
 
             // sign up
             signUpBtn.setOnClickListener {
+                progressBarSignIn.show()
                 // authentication (sign up)
                 auth.createUserWithEmailAndPassword(emailSignEditText.text.toString().trim(),
                 passwordConfirmSignEditText.text.toString().trim())
                     .addOnCompleteListener(requireActivity()){
+                        progressBarSignIn.hide()
                         if(it.isSuccessful){
                             Toast.makeText(context, "Sign up completed", Toast.LENGTH_SHORT).show()
                             findNavController().navigate(R.id.action_signUpFragment_to_introFragment)
