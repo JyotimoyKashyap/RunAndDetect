@@ -6,6 +6,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Authentication.SignUpFragment">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:lottie_rawRes="@raw/lock"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"
+        app:layout_constraintBottom_toTopOf="@id/sign_up_text"
+        app:layout_constraintTop_toBottomOf="@id/progress_bar_sign_in"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progress_bar_sign_in"
         android:layout_width="wrap_content"
@@ -28,6 +39,7 @@
         app:layout_constraintGuide_percent="0.35"/>
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/sign_up_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Sign Up"
