@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_app">This app will detect human poses using ML Kit. It uses your device camera to detect poses so camera permission is necessary for this app to work</string>
+</resources>

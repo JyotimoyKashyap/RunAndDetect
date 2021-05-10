@@ -37,6 +37,9 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/introFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_introFragment_to_guideFragment"
+            app:destination="@id/guideFragment" />
     </fragment>
     <activity
         android:id="@+id/camera"
@@ -70,4 +73,9 @@
             app:popUpTo="@id/signUpFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/guideFragment"
+        android:name="com.jyotimoykashyap.runanddetect.IntroFragment.GuideFragment"
+        android:label="fragment_guide"
+        tools:layout="@layout/fragment_guide" />
 </navigation>

@@ -2,4 +2,9 @@
     <string name="app_name">Run And Detect</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about_app">This app will detect human poses using ML Kit. It uses your device camera to detect poses
+        so camera permission is necessary for this app to work. </string>
+    <string name="best_result_answer">1. To get the best results capture the photo in well lit conditions. \n
+    2. Keep your phone upright.\n
+    3. Be stable while clicking the photograph.</string>
 </resources>

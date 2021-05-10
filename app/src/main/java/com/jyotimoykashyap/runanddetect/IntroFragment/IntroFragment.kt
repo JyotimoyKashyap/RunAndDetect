@@ -95,8 +95,14 @@ class IntroFragment : Fragment() , EasyPermissions.PermissionCallbacks{
 
         val emailText = customAlertDialogView.findViewById<MaterialTextView>(R.id.email_address_text_view)
         val signOutBtn = customAlertDialogView.findViewById<MaterialButton>(R.id.sign_out_btn)
+        val guideBtn = customAlertDialogView.findViewById<MaterialButton>(R.id.guideline_btn)
 
         emailText.text = auth.currentUser.email.toString()
+
+        guideBtn.setOnClickListener{
+            findNavController().navigate(R.id.action_introFragment_to_guideFragment)
+            alertDialog.dismiss()
+        }
 
         signOutBtn.setOnClickListener{
             auth.signOut()

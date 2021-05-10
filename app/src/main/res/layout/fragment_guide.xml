@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".IntroFragment.GuideFragment">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/guide_heading"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Guide"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_margin="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_view"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        app:lottie_rawRes="@raw/walking"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:layout_constraintTop_toBottomOf="@id/guide_heading"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_about"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/about_app"
+        android:layout_margin="12dp"
+        app:layout_constraintTop_toBottomOf="@id/lottie_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="16sp"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/best_result_question"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_about"
+        android:text="How to get best results?"
+        android:layout_margin="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="17sp"
+        android:textStyle="bold"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_about_caution"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="To get the best results capture the photo in well lit conditions. \n\n Keep your phone upright.\n\nBe stable while clicking the photograph."
+        android:layout_margin="12dp"
+        app:layout_constraintTop_toBottomOf="@id/best_result_question"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="16sp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
