@@ -66,13 +66,6 @@ class IntroFragment : Fragment() , EasyPermissions.PermissionCallbacks{
         binding.openCameraBtn.setOnClickListener{
             if(!hasCameraPermission()) requestCameraPermission()
             else{
-                // showing a toast message
-                Toast.makeText(
-                    context,
-                    "Camera Permission Given",
-                    Toast.LENGTH_SHORT
-                ).show()
-
                 /**
                  * Opening the camera activity
                  */
