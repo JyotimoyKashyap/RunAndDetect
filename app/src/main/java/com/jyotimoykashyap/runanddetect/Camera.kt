@@ -1,10 +1,14 @@
 package com.jyotimoykashyap.runanddetect
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
+import android.util.Size
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
@@ -21,6 +25,7 @@ import com.google.mlkit.vision.pose.PoseLandmark
 import com.google.mlkit.vision.pose.accurate.AccuratePoseDetectorOptions
 import com.jyotimoykashyap.runanddetect.databinding.ActivityCameraBinding
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -127,7 +132,8 @@ class Camera : AppCompatActivity(){
                         val galleryImage = BitmapFactory.decodeStream(inputStream)
                         // get the bitmap
                         Log.d("MyCamera", "Image created")
-                        createBitmap(galleryImage)
+                        val resizedBitmap = createBitmap(galleryImage)
+
 
                         // pose detector to process
                         poseDetector.process(image)
@@ -159,7 +165,6 @@ class Camera : AppCompatActivity(){
         val rotationDegrees =0
 
         resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height)
-
     }
 
     fun processImage(pose: Pose){
@@ -342,9 +347,37 @@ class Camera : AppCompatActivity(){
 
         Log.d("MyCamera" , "Above intent")
 
-        val intent = Intent(this, PoseDetectActivity::class.java)
+        val scaleDownBitmap = Bitmap.createScaledBitmap(drawBitmap, drawBitmap.width/2, drawBitmap.height/2, false)
+
+        val poseDetectedFile = saveImageToInternalStorage(scaleDownBitmap)
+
+        val intent = Intent(this, PoseDetectActivity::class.java).apply {
+            putExtra("URI", poseDetectedFile.toString())
+        }
         startActivity(intent)
 
+    }
+
+    fun saveImageToInternalStorage(bitmap: Bitmap) : Uri{
+        val wrapper = ContextWrapper(applicationContext)
+        var file = wrapper.getDir("processed_images", Context.MODE_PRIVATE)
+
+        file = File(file, FILENAME_FORMAT + "processed_image" + ".jpg")
+
+        try{
+            val stream = FileOutputStream(file)
+
+            // compressing bitmap
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream)
+            // flush the stream
+            stream.flush()
+            // close the stream
+            stream.close()
+        }catch (e : IOException){
+            e.printStackTrace()
+        }
+
+        return Uri.parse(file.absolutePath)
     }
 
     fun getAngle(
@@ -393,7 +426,7 @@ class Camera : AppCompatActivity(){
 //                }
 
             // set back camera as default
-            val cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
+            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
             try {
                 cameraProvider.unbindAll()
