@@ -53,9 +53,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="To check the guidelines of using this app click on the account button on top right corner and click guidelines"
+        android:textSize="16sp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/camera_open_card"/>
+
 
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/camera_open_card"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:cardCornerRadius="20dp"

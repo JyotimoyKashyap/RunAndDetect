@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.transition.MaterialElevationScale
 import com.jyotimoykashyap.runanddetect.R
 import com.jyotimoykashyap.runanddetect.databinding.FragmentGuideBinding
 
@@ -33,6 +34,11 @@ class GuideFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         _binding = FragmentGuideBinding.inflate(inflater, container, false)
+
+        enterTransition = MaterialElevationScale(true)
+        exitTransition = MaterialElevationScale(true)
+        reenterTransition = MaterialElevationScale(true)
+
         return binding.root
     }
 

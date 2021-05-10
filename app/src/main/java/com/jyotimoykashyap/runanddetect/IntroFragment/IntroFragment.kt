@@ -12,6 +12,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.textview.MaterialTextView
+import com.google.android.material.transition.MaterialElevationScale
 import com.google.firebase.auth.FirebaseAuth
 import com.jyotimoykashyap.runanddetect.R
 import com.jyotimoykashyap.runanddetect.databinding.FragmentIntroBinding
@@ -51,6 +52,11 @@ class IntroFragment : Fragment() , EasyPermissions.PermissionCallbacks{
         _binding = FragmentIntroBinding.inflate(inflater, container, false)
         // your code goes here
         auth = FirebaseAuth.getInstance()
+
+        enterTransition = MaterialElevationScale(true)
+        exitTransition = MaterialElevationScale(true)
+        reenterTransition = MaterialElevationScale(true)
+
 
         // material dialog
         materialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext())

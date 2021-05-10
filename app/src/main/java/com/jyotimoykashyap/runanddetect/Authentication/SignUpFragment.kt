@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.transition.MaterialElevationScale
 import com.google.firebase.auth.FirebaseAuth
 import com.jyotimoykashyap.runanddetect.R
 import com.jyotimoykashyap.runanddetect.databinding.FragmentSignUpBinding
@@ -43,6 +44,10 @@ class SignUpFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentSignUpBinding.inflate(inflater, container, false)
         // your code goes here
+
+        enterTransition = MaterialElevationScale(true)
+        exitTransition = MaterialElevationScale(true)
+        reenterTransition = MaterialElevationScale(true)
 
         auth = FirebaseAuth.getInstance()
 

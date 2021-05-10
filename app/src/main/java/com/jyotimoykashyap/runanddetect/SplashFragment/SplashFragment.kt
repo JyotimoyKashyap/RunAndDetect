@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.transition.MaterialElevationScale
 import com.google.firebase.auth.FirebaseAuth
 import com.jyotimoykashyap.runanddetect.R
 import com.jyotimoykashyap.runanddetect.databinding.FragmentSplashBinding
@@ -42,6 +43,8 @@ class SplashFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentSplashBinding.inflate(inflater, container, false)
+
+        exitTransition = MaterialElevationScale(true)
 
         // your code goes here
         auth = FirebaseAuth.getInstance()
