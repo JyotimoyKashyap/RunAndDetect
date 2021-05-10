@@ -6,17 +6,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SplashFragment.SplashFragment">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/splash_text_view"
-        android:layout_width="0dp"
+    <ImageView
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Run and Detect"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/app_icon"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
