@@ -286,6 +286,9 @@ class Camera : AppCompatActivity(){
             val rightEarX = rightEarP.x
             val rightEarY = rightEarP.y
 
+
+            Log.d("MyCamera" , "NoseX: " + noseX.toString() + "NoseY: " + noseY.toString())
+
             displayAll(leftShoulderX, leftShoulderY, rightShoulderX, rightShoulderY,
                         lElbowX, lElbowY, rElbowX, rElbowY, lWristX, lWristY, rWristX, rWristY,
                         lHipX, lHipY, rHipX, rHipY, lAnkleX, lAnkleY, rAnkleX, rAnkleY,
@@ -338,6 +341,7 @@ class Camera : AppCompatActivity(){
         canvas.drawLine(lKneeX, lKneeY, lAnkleX, lAnkleY, paint)
 
         Log.d("MyCamera" , "Above intent")
+
         val intent = Intent(this, PoseDetectActivity::class.java)
         startActivity(intent)
 
@@ -389,7 +393,7 @@ class Camera : AppCompatActivity(){
 //                }
 
             // set back camera as default
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+            val cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
 
             try {
                 cameraProvider.unbindAll()
