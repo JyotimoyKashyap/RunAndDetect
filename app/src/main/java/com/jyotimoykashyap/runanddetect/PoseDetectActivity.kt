@@ -27,6 +27,9 @@ class PoseDetectActivity : AppCompatActivity() {
         Log.d("MyCamera" , extra?.getString("URI") + "   :  File path")
 
         val filePath = extra?.getString("URI")
+        val angleText = extra?.getString("Info")
+
+        binding.infoTextView.text = angleText
 
 
         binding.imageView.setImageURI(filePath?.toUri())

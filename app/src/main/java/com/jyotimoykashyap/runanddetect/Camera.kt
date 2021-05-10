@@ -167,6 +167,8 @@ class Camera : AppCompatActivity(){
         resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height)
     }
 
+    private lateinit var angleText: String
+
     fun processImage(pose: Pose){
         try {
             // Get all PoseLandmarks. If no person was detected, the list will be empty
@@ -291,20 +293,39 @@ class Camera : AppCompatActivity(){
             val rightEarX = rightEarP.x
             val rightEarY = rightEarP.y
 
+            val leftArmAngle = getAngle(leftShoulder, leftElbow, leftWrist)
+            val leftArmAngleText = String.format("%.2f", leftArmAngle)
+
+            val rightArmAngle = getAngle(rightShoulder, rightElbow, rightWrist)
+            val rightArmAngleText = String.format("%.2f", rightArmAngle)
+
+            val leftLegAngle = getAngle(leftHip, leftKnee, leftAnkle)
+            val leftLegAngleText = String.format("%.2f", leftLegAngle)
+
+            val rightLegAngle = getAngle(rightHip, rightKnee , rightAnkle)
+            val rightLegAngleText = String.format("%.2f", rightLegAngle)
+
+            angleText = "Left Arm angle: " + leftArmAngleText + "\n" +
+                    "Right Arm angle text: " + rightArmAngleText + "\n"
+            "Left Leg angle text: " + leftLegAngleText + "\n"
+            "Right Leg angle text: " + rightLegAngleText + "\n"
+
 
             Log.d("MyCamera" , "NoseX: " + noseX.toString() + "NoseY: " + noseY.toString())
 
             displayAll(leftShoulderX, leftShoulderY, rightShoulderX, rightShoulderY,
                         lElbowX, lElbowY, rElbowX, rElbowY, lWristX, lWristY, rWristX, rWristY,
                         lHipX, lHipY, rHipX, rHipY, lAnkleX, lAnkleY, rAnkleX, rAnkleY,
-                        lKneeX, lKneeY, rKneeX, rKneeY)
+                        lKneeX, lKneeY, rKneeX, rKneeY, noseX, noseY, leftEyeX, leftEyeY, rightEyeX, rightEyeY,
+                        leftMouthX, leftMouthY, rightMouthX, rightMouthY, leftEarX, leftEarY, rightMouthX, rightMouthY)
 
 
 
 
 
         }catch (e: Exception){
-            Log.d("MyCamera", "Error in processing")
+            Log.d("MyCamera", "Object not detected")
+            Toast.makeText(this, "Object not detected" , Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -316,10 +337,13 @@ class Camera : AppCompatActivity(){
         lHipX: Float, lHipY: Float, rHipX: Float, rHipY: Float,
         lAnkleX: Float, lAnkleY: Float, rAnkleX: Float, rAnkleY: Float,
         lKneeX: Float, lKneeY: Float, rKneeX: Float, rKneeY: Float,
+        noseX: Float, noseY: Float, lEyeX: Float, lEyeY: Float, rEyeX: Float, rEyeY: Float,
+        lMouthX: Float, lMouthY: Float, rMouthX: Float, rMouthY: Float, lEarX: Float, lEarY: Float,
+        rEarX: Float, rEarY: Float
     ){
         val paint = Paint()
         paint.color = Color.GREEN
-        val strokeWidth = 4.0f
+        val strokeWidth = 5.0f
         paint.strokeWidth = strokeWidth
 
         val drawBitmap = Bitmap.createBitmap(
@@ -345,6 +369,28 @@ class Camera : AppCompatActivity(){
         canvas.drawLine(rKneeX, rKneeY, rAnkleX, rAnkleY, paint)
         canvas.drawLine(lKneeX, lKneeY, lAnkleX, lAnkleY, paint)
 
+        // draw points in image
+        val paintPoint = Paint()
+        paintPoint.color = Color.RED
+        paintPoint.strokeWidth = 5.0f
+        paintPoint.strokeCap = Paint.Cap.ROUND
+
+        // draw points
+        canvas.drawPoint(noseX, noseY, paintPoint)
+        canvas.drawPoint(lEarX, lEarY, paintPoint)
+        canvas.drawPoint(rEarX, rEarY, paintPoint)
+        canvas.drawPoint(lMouthX, lMouthY, paintPoint)
+        canvas.drawPoint(rMouthX, rMouthY, paintPoint)
+        canvas.drawPoint(lShoulderX, lShoulderY, paintPoint)
+        canvas.drawPoint(rShoulderX, rShoulderY, paintPoint)
+        canvas.drawPoint(lElbowX, lElbowY, paintPoint)
+        canvas.drawPoint(rElbowX, rElbowY, paintPoint)
+        canvas.drawPoint(lHipX, lHipY, paintPoint)
+        canvas.drawPoint(rHipX, rHipY, paintPoint)
+
+
+
+
         Log.d("MyCamera" , "Above intent")
 
         val scaleDownBitmap = Bitmap.createScaledBitmap(drawBitmap, drawBitmap.width/2, drawBitmap.height/2, false)
@@ -353,6 +399,8 @@ class Camera : AppCompatActivity(){
 
         val intent = Intent(this, PoseDetectActivity::class.java).apply {
             putExtra("URI", poseDetectedFile.toString())
+            putExtra("Info" , angleText)
+
         }
         startActivity(intent)
 
