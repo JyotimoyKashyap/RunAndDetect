@@ -1,5 +1,6 @@
 package com.jyotimoykashyap.runanddetect
 
+import android.animation.ObjectAnimator
 import android.content.ContentResolver
 import android.content.Intent
 import android.graphics.Bitmap
@@ -9,9 +10,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.core.net.toUri
 import com.google.mlkit.vision.common.InputImage
 import com.jyotimoykashyap.runanddetect.databinding.ActivityPoseDetectBinding
+import kotlinx.coroutines.delay
 
 class PoseDetectActivity : AppCompatActivity() {
 
@@ -30,6 +34,14 @@ class PoseDetectActivity : AppCompatActivity() {
         val angleText = extra?.getString("Info")
 
         binding.infoTextView.text = angleText
+
+        val objectAnimator = ObjectAnimator.ofFloat(binding.infoCard, View.ALPHA, 1f)
+        objectAnimator.apply {
+            duration = 400
+            interpolator = AccelerateDecelerateInterpolator()
+            startDelay = 100
+            start()
+        }
 
 
         binding.imageView.setImageURI(filePath?.toUri())

@@ -16,6 +16,7 @@
         android:id="@+id/info_card"
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:alpha="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:cardCornerRadius="20dp"
         app:cardElevation="10dp">
